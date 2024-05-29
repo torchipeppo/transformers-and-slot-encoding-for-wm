@@ -1,0 +1,39 @@
+crosscoder:
+  _target_: transformer_module.TransformerCrosscoder
+  config:
+    _target_: transformer_module.GPTConfig
+    block_size: ${the_global.tokimg_sequence_length}
+    vocab_size: ${the_global.vocab_size}
+    n_layer: 2
+    n_head: 12
+    n_embd: ${the_global.embedding_dim}
+    dropout: 0.0
+    bias: True  # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
+
+decoder:
+  _target_: transformer_module.TransformerDecoder
+  config:
+    _target_: transformer_module.GPTConfig
+    block_size: ${the_global.tokimg_sequence_length}
+    vocab_size: ${the_global.vocab_size}
+    n_layer: 6
+    n_head: 12
+    n_embd: ${the_global.embedding_dim}
+    dropout: 0.0
+    bias: True  # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
+
+encoder:
+  _target_: transformer_module.TransformerEncoder
+  config:
+    _target_: transformer_module.GPTConfig
+    block_size: ${the_global.tokimg_sequence_length}
+    vocab_size: ${the_global.vocab_size}
+    n_layer: 2
+    n_head: 12
+    n_embd: ${the_global.embedding_dim}
+    dropout: 0.0
+    bias: True  # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
+
+slots:
+  slot_no: 4
+  slot_dim: ${the_global.embedding_dim}

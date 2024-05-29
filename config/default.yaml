@@ -1,0 +1,58 @@
+# change the defaults together so that they refer to the same model!
+defaults:
+  - _self_
+  - tokenizer: phyre
+  - dvae: default
+  - path_constants: path_constants
+  - dataset: phyre-labeled
+  - transformer: phyre
+  - task_worldmodeling: default
+
+# manifest hydra folder
+hydra:
+  output_subdir: hydra
+
+device: CUDA_IF_AVAILABLE  # this default is handled in a special decorator, can be overridden
+device_type: ???     # this is set in the same decorator based on the device; this should NOT be overridden
+
+enable_profiling: False
+enable_videos: True  # not implemented in all training scripts (default is True)
+report_memory: False  # currently only implemented in train_three_transformers, causing it to write a simple memory report and exit efter 2 epochs
+                      # (unless this comment became outdated since then)
+
+the_global:
+  embedding_dim: 768
+  tokimg_sequence_length: 65   # an upper bound. The actual sequence length depends on the tokenizer config.
+  vocab_size: 50304  # GPT-2 vocab_size is 50257, nanogpt pads up to nearest multiple of 64 (i.e. 50304) for efficiency
+
+training:
+  train_split: 0.95
+  batch_size: 50
+  epochs: 100
+  batches_per_epoch: 10
+  subbatch_size: 5  # because of memory constraints, only a small number of samples is parallelized at a time. Loss is accumulated so that gradient update is still per-batch.
+  _tokenizer_lr: 0.0001
+  _transformer_lr: 6e-4
+  #
+  crosscoder:
+    learning_rate: ${training._transformer_lr}
+    weight_decay: 1e-1
+    betas:
+      - 0.9
+      - 0.95
+  decoder:
+    learning_rate: ${training._transformer_lr}
+    weight_decay: 1e-1
+    betas:
+      - 0.9
+      - 0.95
+  encoder:
+    learning_rate: ${training._transformer_lr}
+    weight_decay: 1e-1
+    betas:
+      - 0.9
+      - 0.95
+
+eval:
+  batch_size: ${training.batch_size}
+  subbatch_size: ${training.subbatch_size}

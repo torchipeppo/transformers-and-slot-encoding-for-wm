@@ -1,0 +1,47 @@
+# adds a *bunch* of params for the original STEVE architecture, while referring to the default for those shared w/ the rest.
+
+defaults:
+  - default
+  - _self_
+
+num_workers: 4
+
+checkpoint_path: checkpoint.pt.tar
+
+lr_dvae: 3e-4
+lr_enc: 1e-4
+lr_dec: 3e-4
+lr_warmup_steps: 30000
+lr_half_life: 250000
+clip: 0.05
+epochs: 1  # NOTE: "epoch" has a different meaning for STEVE wrt my scripts
+steps: 200000
+
+tau_start: 1.0
+tau_final: 0.1
+tau_steps: 30000
+
+hard: False
+use_dp: True
+
+# steve
+
+steve_conf:
+  num_iterations: 2
+  num_slots: ${transformer.slots.slot_no}
+  cnn_hidden_size: 64
+  slot_size: ${transformer.slots.slot_dim}
+  mlp_hidden_size: 192
+  num_predictor_blocks: 1
+  num_predictor_heads: 4
+  predictor_dropout: 0.0
+
+  vocab_size: ${the_global.vocab_size}
+  num_decoder_blocks: 8
+  num_decoder_heads: 4
+  d_model: ${the_global.embedding_dim}  # 192
+  dropout: 0.1
+
+  # HARDCODED BY THE DATASET, DO NOT CHANGE RANDOMLY!
+  image_size: 64
+  img_channels: 3

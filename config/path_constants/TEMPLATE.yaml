@@ -1,0 +1,11 @@
+# Make a copy of this and name it "path_constants.yaml". (Or just rename this.)
+# It should contain any paths specific to your machine, such as dataset locations.
+# Here is a non-exhaustive list of useful parameters:
+
+phyre_video_dataset: ???
+phyre_pretrained_tokenizer: ???
+phyre_pretrained_3transf: ???
+logs_dir: ???
+
+# For more parameter names, check the train_* or eval_* script you run, as well as picking.py
+# Most of the useful parameters are also mentioned in the README.

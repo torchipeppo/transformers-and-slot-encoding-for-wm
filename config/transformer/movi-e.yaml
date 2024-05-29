@@ -1,0 +1,5 @@
+defaults:
+  - default
+
+slots:
+  slot_no: 15

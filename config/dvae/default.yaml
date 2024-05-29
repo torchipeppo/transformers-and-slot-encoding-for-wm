@@ -1,0 +1,9 @@
+vocab_size: 512
+img_channels: 3
+lr: 3e-4
+HARD: False
+
+SCHEDULE_ARGS:
+  tau_start: 1.0
+  tau_final: 0.1
+  tau_steps: 30000

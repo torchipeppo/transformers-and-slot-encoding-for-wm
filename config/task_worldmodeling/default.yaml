@@ -1,0 +1,22 @@
+# positive number: this many frames (from the beginning) are given to the model, the rests are withheld for it to predict
+# NOTE: Be aware of the minimum video length of the dataset! For PHYRE it can be as low as 7
+given_frames: 5
+
+classifier:
+  _target_: transformer_module.PHYREVideoClassifier
+  config:
+    _target_: transformer_module.GPTConfig
+    block_size: ${the_global.tokimg_sequence_length}
+    vocab_size: ${the_global.vocab_size}
+    n_layer: 2
+    n_head: 12
+    n_embd: ${the_global.embedding_dim}
+    dropout: 0.0
+    bias: True  # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
+
+training:
+    learning_rate: ${training._transformer_lr}
+    weight_decay: 1e-1
+    betas:
+      - 0.9
+      - 0.95

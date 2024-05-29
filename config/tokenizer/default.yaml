@@ -1,0 +1,20 @@
+_target_: tokenizer_module.Tokenizer
+
+vocab_size: ${the_global.vocab_size}
+embed_dim: ${the_global.embedding_dim}
+encoder:
+  _target_: tokenizer_module.Encoder
+  config:
+    _target_: tokenizer_module.EncoderDecoderConfig
+    resolution: 64
+    in_channels: 3
+    z_channels: 512
+    ch: 64
+    ch_mult: [1, 1, 1, 1, 1]  # image resolution is halved (len-1) times, determining the number of tokens.
+    num_res_blocks: 2
+    attn_resolutions: [8, 16]
+    out_ch: 3
+    dropout: 0.0
+decoder:
+  _target_: tokenizer_module.Decoder
+  config: ${..encoder.config}
