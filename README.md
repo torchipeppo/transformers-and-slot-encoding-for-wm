@@ -1,5 +1,7 @@
 # Transformers and slot encoding for sample efficient physical world modeling
 
+Read the paper on arXiv: https://arxiv.org/abs/2405.20180
+
 ## Requirements
 
 To install requirements:
